@@ -1,9 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Blog from './components/Blog';
 import LoginForm from './components/LoginForm';
 import service from './services/service';
 import SubmitBlogForm from './components/SubmitBlogForm';
+import NotificationContainer from './components/NotificationContainer';
 import { parseError, errorStyle, infoStyle } from './utils';
+import { postNotification as postNotificationAction } from './actions/notificationActions';
 
 class App extends React.Component {
   constructor(props) {
@@ -32,20 +36,6 @@ class App extends React.Component {
     service.setAuthHeader(user ? user.token : undefined);
   }
 
-  removeNotification = (id) => {
-    this.setState(prevState => ({
-      notifications: prevState.notifications.filter(n => n.id !== id)
-    }));
-  }
-
-  postNotification = (n) => {
-    // generate random id https://gist.github.com/6174/6062387
-    const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
-    this.setState(prevState => ({ notifications: prevState.notifications.concat({...n, id})}));
-    setTimeout(() => this.removeNotification(id), 2000);
-  }
-
   toggleBlog = (id) => {
     const newBlogs = this.state.blogs.map(blog => blog._id === id
       ? {...blog, expanded: !blog.expanded}
@@ -65,12 +55,12 @@ class App extends React.Component {
     
         this.setState({ blogs: newBlogs });
 
-        this.postNotification({
+        this.props.postNotification({
           message: `liked blog ${blog.title}`,
           style: infoStyle
         });
       })
-      .catch(e => this.postNotification({
+      .catch(e => this.props.postNotification({
         message: parseError(e),
         style: errorStyle
       }));
@@ -79,12 +69,11 @@ class App extends React.Component {
   concatBlog = (blog) => this.setState(prevState => ({ blogs: prevState.blogs.concat(blog)}));
 
   deleteBlog = (id) => {
-
     service.deleteBlog(id)
       .then(() =>
         this.setState(prevState => ({ blogs: prevState.blogs.filter(b => b._id !== id)}))
       )
-      .catch(e => this.postNotification({
+      .catch(e => this.props.postNotification({
         message: parseError(e),
         style: errorStyle
       }));
@@ -95,14 +84,10 @@ class App extends React.Component {
 
     return (
       <div>
-        <div>
-          {this.state.notifications.map(n =>
-            <div key={n.id} style={n.style}>{n.message}</div>
-          )}
-        </div>
-        <LoginForm user={this.state.user} setUser={this.setUser} postNotification={this.postNotification} />
+        <NotificationContainer />
+        <LoginForm user={this.state.user} setUser={this.setUser} />
         {this.state.user
-          ? <SubmitBlogForm concatBlog={this.concatBlog} postNotification={this.postNotification} />
+          ? <SubmitBlogForm concatBlog={this.concatBlog} />
           : null
         }
         {this.state.user
@@ -122,4 +107,12 @@ class App extends React.Component {
   }
 }
 
-export default App;
+App.propTypes = ({
+  postNotification: PropTypes.func
+});
+
+const mapDispatchToProps = dispatch => ({
+  postNotification: (payload, lifetime, style) => dispatch(postNotificationAction(payload, lifetime, style)),
+});
+
+export default connect(null, mapDispatchToProps)(App);

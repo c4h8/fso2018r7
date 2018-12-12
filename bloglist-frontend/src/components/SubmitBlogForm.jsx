@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import service from '../services/service';
+import { connect } from 'react-redux';
 import { parseError, errorStyle, infoStyle } from '../utils';
+import { postNotification as postNotificationAction } from '../actions/notificationActions';
+
 
 class SubmitBlogForm extends React.Component {
   constructor(props) {
@@ -73,5 +76,9 @@ SubmitBlogForm.propTypes = ({
   postNotification: PropTypes.func,
 });
 
-export default SubmitBlogForm;
+const mapDispatchToProps = dispatch => ({
+  postNotification: (payload, lifetime, style) => dispatch(postNotificationAction(payload, lifetime, style)),
+});
+
+export default connect(null, mapDispatchToProps)(SubmitBlogForm);
 

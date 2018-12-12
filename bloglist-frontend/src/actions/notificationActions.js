@@ -14,12 +14,13 @@ const deleteNotification = id => ({
   id
 });
 
-export const postNotification = (payload, lifetime = 2) => {
+export const postNotification = (props) => {
   const id = revisedRandId();
+  const {message, lifetime, style} = props;
 
   return dispatch => {
-    dispatch(addNotification({...payload, id}));
-    setTimeout(() => dispatch(deleteNotification(id)), lifetime * 1000);
+    dispatch(addNotification({message, id, style}));
+    setTimeout(() => dispatch(deleteNotification(id)), (lifetime || 2) * 1000);
   };
 };
 

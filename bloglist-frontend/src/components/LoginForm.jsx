@@ -1,7 +1,9 @@
 import React from 'react';
-import service from '../services/service';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import service from '../services/service';
 import { parseError, errorStyle, infoStyle } from '../utils';
+import { postNotification as postNotificationAction } from '../actions/notificationActions';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -88,4 +90,8 @@ LoginForm.propTypes = ({
   postNotification: PropTypes.func,
 });
 
-export default LoginForm;
+const mapDispatchToProps = dispatch => ({
+  postNotification: (payload, lifetime, style) => dispatch(postNotificationAction(payload, lifetime, style)),
+});
+
+export default connect(null, mapDispatchToProps)(LoginForm);
