@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import service from '../services/service';
 import { connect } from 'react-redux';
-import { parseError, errorStyle, infoStyle } from '../utils';
 import { postNotification as postNotificationAction } from '../actions/notificationActions';
+import { postBlog as postBlogAction } from '../actions/blogActions';
 
 
 class SubmitBlogForm extends React.Component {
@@ -28,21 +27,7 @@ class SubmitBlogForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
-    service
-      .submitBlog(this.state)
-      .then(res => {
-        const newBlog = res.data;
-        this.props.concatBlog(newBlog);
-        this.props.postNotification({
-          message: `Added ${newBlog.name} by ${newBlog.author}`,
-          style: infoStyle
-        });
-      })
-      .catch(e => this.props.postNotification({
-        message: parseError(e),
-        style: errorStyle
-      }));
+    this.props.postBlog(this.state);
   }
 
   render() {
@@ -74,10 +59,12 @@ class SubmitBlogForm extends React.Component {
 SubmitBlogForm.propTypes = ({
   concatBlog: PropTypes.func,
   postNotification: PropTypes.func,
+  postBlog: PropTypes.func,
 });
 
 const mapDispatchToProps = dispatch => ({
   postNotification: (payload, lifetime, style) => dispatch(postNotificationAction(payload, lifetime, style)),
+  postBlog: blog => dispatch(postBlogAction(blog))
 });
 
 export default connect(null, mapDispatchToProps)(SubmitBlogForm);

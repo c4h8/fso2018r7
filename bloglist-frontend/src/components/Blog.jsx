@@ -19,12 +19,12 @@ const Blog = ({ blog, toggleBlog, likeBlog, deleteBlog, username }) => {
       </React.Fragment>)
     : null;
 
-  const payload = blog.expanded
+  const expandedContent = blog.expanded
     ? (
       <React.Fragment>
         <p>{blog.url}</p>
         <span className="blog-likes"> {`${blog.likes} likes `} </span>
-        <button onClick={() => likeBlog(blog)}>like</button>
+        <button onClick={() => likeBlog(blog._id)}>like</button>
         {deleteButton}
       </React.Fragment>)
     : null;
@@ -32,7 +32,7 @@ const Blog = ({ blog, toggleBlog, likeBlog, deleteBlog, username }) => {
   return (
     <div style={blogStyle}>
       <div className="blog-header" onClick={() => toggleBlog(blog._id)}>{ blog.title } { blog.author }</div>
-      { payload }
+      { expandedContent }
     </div>);
 };
 
