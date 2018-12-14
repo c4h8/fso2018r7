@@ -14,6 +14,8 @@ const service = {
     return request.then(response => response.data);
   },
 
+  getUsers: () => axios.get('/api/users'),
+
   submitBlog: blog =>
     axios.post('/api/blogs', blog, authHeader),
 

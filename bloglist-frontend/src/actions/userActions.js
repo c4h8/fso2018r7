@@ -8,6 +8,19 @@ export const setLoggedInUser = payload => ({
   payload
 });
 
+const setUsers = payload => ({
+  type: types.SET_USERS,
+  payload
+});
+
+export const getUsers = () => {
+  return dispatch => {
+    service.getUsers()
+      .then(res => dispatch(setUsers(res.data)))
+      .catch(e => window.alert('gettin users is kill'));
+  };
+};
+
 export const logoutUser = () => {
   return dispatch => {
     dispatch(setLoggedInUser(undefined));

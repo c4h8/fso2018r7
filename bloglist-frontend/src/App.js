@@ -1,14 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 import BlogContainer from './components/BlogContainer';
 import LoginForm from './components/LoginForm';
 import service from './services/service';
 import SubmitBlogForm from './components/SubmitBlogForm';
 import NotificationContainer from './components/NotificationContainer';
+import UsersContainer from './components/UsersContainer';
 import { postNotification as postNotificationAction } from './actions/notificationActions';
 import { getBlogs as getBlogsAction } from './actions/blogActions';
-import { setLoggedInUser as setLoggedInUserAction } from './actions/userActions';
+import * as userActions from './actions/userActions';
+
+const BlogView = () => (
+  <div>
+    <SubmitBlogForm />
+    <BlogContainer />
+  </div>
+);
 
 class App extends React.Component {
   constructor(props) {
@@ -29,23 +39,20 @@ class App extends React.Component {
     }
 
     this.props.getBlogs();
-  }
-
-  setUser = (user) => {
-    this.setState({ user });
-    service.setAuthHeader(user ? user.token : undefined);
+    this.props.getUsers();
   }
 
   render() {
     return (
-      <div>
-        <NotificationContainer />
-        <LoginForm user={this.state.user} setUser={this.setUser} />
+      <Router>
+        <div>
+          <NotificationContainer />
+          <LoginForm user={this.state.user} setUser={this.setUser} />
 
-        <SubmitBlogForm />
-
-        <BlogContainer />
-      </div>
+          <Route exact path="/" render={() => <BlogView />} />
+          <Route path="/users" render={() => <UsersContainer />} />
+        </div>
+      </Router>
     );
   }
 }
@@ -64,10 +71,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   postNotification: (payload, lifetime, style) => dispatch(postNotificationAction(payload, lifetime, style)),
   setLoggedInUser: (user) => {
-    dispatch(setLoggedInUserAction(user));
+    dispatch(userActions.setLoggedInUser(user));
     service.setAuthHeader(user ? user.token : undefined);
   },
-  getBlogs: () => dispatch(getBlogsAction())
+  getBlogs: () => dispatch(getBlogsAction()),
+  getUsers: () => dispatch(userActions.getUsers())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
