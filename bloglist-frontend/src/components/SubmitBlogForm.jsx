@@ -36,22 +36,28 @@ class SubmitBlogForm extends React.Component {
     return(
       <div>
         <form onSubmit={this.handleSubmit}>
-          <h3>create new</h3>
-          <ul>
-            <li>
-              <label>title </label>
-              <input name="title" type="text" value={this.state.title} onChange={this.handleFormChange} />
-            </li>
-            <li>
-              <label>author </label>
-              <input name="author" type="text" value={this.state.author} onChange={this.handleFormChange} />
-            </li>
-            <li>
-              <label>url </label>
-              <input name="url" type="text" value={this.state.url} onChange={this.handleFormChange} />
-            </li>
-            <li><input type="submit" value="create" /></li>
-          </ul>
+          <h4>create new</h4>
+          <div className="form-group row">
+            <label className="col-sm-2">title</label>
+            <div className="col-sm-10">
+              <input className="form-control-sm" name="title" type="text" value={this.state.title} onChange={this.handleFormChange} />
+            </div>
+          </div>
+          <div className="form-group row">
+            <label className="col-sm-2">author</label>
+            <div className="col-sm-10">
+              <input className="form-control-sm" name="author" type="text" value={this.state.author} onChange={this.handleFormChange} />
+            </div>
+          </div>
+          <div className="form-group row">
+            <label className="col-sm-2">url</label>
+            <div className="col-sm-10">
+              <input className="form-control-sm" name="url" type="text" value={this.state.url} onChange={this.handleFormChange} />
+            </div>  
+          </div>
+          <div className="col-sm-12">
+            <input className="btn btn-primary" type="submit" value="create" />
+          </div>
         </form>
       </div>
     );

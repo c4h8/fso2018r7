@@ -9,6 +9,8 @@ import notificationReducer from './reducers/notificationReducer';
 import blogReducer from './reducers/blogReducer';
 import userReducer from './reducers/userReducer';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 const reducer = combineReducers({
   notifications: notificationReducer,
   blogs: blogReducer,

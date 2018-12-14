@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 
 import BlogContainer from './components/BlogContainer';
 import LoginForm from './components/LoginForm';
@@ -24,11 +24,6 @@ const BlogView = () => (
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: undefined,
-      blogs: [],
-      notifications: []
-    };
   }
 
   componentDidMount() {
@@ -46,13 +41,17 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className="container">
+          <nav className="nav bg-dark">
+            <li className="nav-item"><NavLink className="nav-link text-white" to="/">home</NavLink></li>
+            <li className="nav-item"><NavLink className="nav-link text-white" to="/users">users</NavLink></li>
+          </nav>
           <NotificationContainer />
-          <LoginForm user={this.state.user} setUser={this.setUser} />
+          <LoginForm />
 
           <Route exact path="/" render={() => <BlogView />} />
           <Route exact path="/users" render={() => <UsersContainer />} />
-          <Route path="/users/:id" render={({match}) => <UserView id={match.params.id}/>} />
+          <Route path="/users/:id" render={({ match }) => <UserView id={match.params.id}/>} />
         </div>
       </Router>
     );
@@ -64,11 +63,6 @@ App.propTypes = ({
   getBlogs: PropTypes.func,
   getUsers: PropTypes.func,
   setLoggedInUser: PropTypes.func,
-  rblogs: PropTypes.arrayOf(Object)
-});
-
-const mapStateToProps = state => ({
-  rblogs: state.blogs,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -81,4 +75,4 @@ const mapDispatchToProps = dispatch => ({
   getUsers: () => dispatch(userActions.getUsers())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

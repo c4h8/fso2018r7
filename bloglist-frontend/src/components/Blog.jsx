@@ -1,14 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const blogStyle = ({
-  paddingTop: 10,
-  paddingLeft: 2,
-  backgroundColor: '#e5e5e5',
-  margin: '10px 0px',
-  boxSizing: 'border-box'
-});
-
 const Blog = ({ blog, toggleBlog, likeBlog, deleteBlog, username }) => {
   const deleteButton = (!blog.user || blog.user.username === username)
     ?(
@@ -30,8 +22,8 @@ const Blog = ({ blog, toggleBlog, likeBlog, deleteBlog, username }) => {
     : null;
 
   return (
-    <div style={blogStyle}>
-      <div className="blog-header" onClick={() => toggleBlog(blog._id)}>{ blog.title } { blog.author }</div>
+    <div className="col-sm-12 border my-2">
+      <div className="blog-header" onClick={() => toggleBlog(blog._id)}>{ blog.title } by { blog.author }</div>
       { expandedContent }
     </div>);
 };
