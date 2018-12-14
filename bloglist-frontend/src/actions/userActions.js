@@ -17,7 +17,10 @@ export const getUsers = () => {
   return dispatch => {
     service.getUsers()
       .then(res => dispatch(setUsers(res.data)))
-      .catch(e => window.alert('gettin users is kill'));
+      .catch(e => this.props.postNotification({
+        message: parseError(e),
+        style: errorStyle
+      }));
   };
 };
 

@@ -9,6 +9,7 @@ import service from './services/service';
 import SubmitBlogForm from './components/SubmitBlogForm';
 import NotificationContainer from './components/NotificationContainer';
 import UsersContainer from './components/UsersContainer';
+import UserView from './components/UserView';
 import { postNotification as postNotificationAction } from './actions/notificationActions';
 import { getBlogs as getBlogsAction } from './actions/blogActions';
 import * as userActions from './actions/userActions';
@@ -50,7 +51,8 @@ class App extends React.Component {
           <LoginForm user={this.state.user} setUser={this.setUser} />
 
           <Route exact path="/" render={() => <BlogView />} />
-          <Route path="/users" render={() => <UsersContainer />} />
+          <Route exact path="/users" render={() => <UsersContainer />} />
+          <Route path="/users/:id" render={({match}) => <UserView id={match.params.id}/>} />
         </div>
       </Router>
     );
@@ -60,6 +62,7 @@ class App extends React.Component {
 App.propTypes = ({
   postNotification: PropTypes.func,
   getBlogs: PropTypes.func,
+  getUsers: PropTypes.func,
   setLoggedInUser: PropTypes.func,
   rblogs: PropTypes.arrayOf(Object)
 });

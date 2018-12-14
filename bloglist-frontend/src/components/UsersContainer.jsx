@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const UsersContainer = ({users}) => {
   if(!users) return null;
@@ -18,7 +19,7 @@ const UsersContainer = ({users}) => {
         <tbody>
           {users.map(user =>
             <tr key={user.id}>
-              <td>{user.username}</td>
+              <td><Link to={`/users/${user.id}`}>{user.username}</Link></td>
               <td>{user.blogs.length}</td>
             </tr>
           )}
