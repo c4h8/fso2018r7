@@ -10,6 +10,7 @@ import SubmitBlogForm from './components/SubmitBlogForm';
 import NotificationContainer from './components/NotificationContainer';
 import UsersContainer from './components/UsersContainer';
 import UserView from './components/UserView';
+import SingleBlogView from './components/BlogView';
 import { postNotification as postNotificationAction } from './actions/notificationActions';
 import { getBlogs as getBlogsAction } from './actions/blogActions';
 import * as userActions from './actions/userActions';
@@ -52,6 +53,7 @@ class App extends React.Component {
           <Route exact path="/" render={() => <BlogView />} />
           <Route exact path="/users" render={() => <UsersContainer />} />
           <Route path="/users/:id" render={({ match }) => <UserView id={match.params.id}/>} />
+          <Route path="/blogs/:id" render={({ match }) => <SingleBlogView id={match.params.id}/>} />
         </div>
       </Router>
     );

@@ -1,16 +1,12 @@
 import axios from 'axios';
 
-const baseUrl = '/api/blogs';
-
-
-
 let authHeader = undefined;
 
 const service = {
   setAuthHeader: newToken => authHeader = { headers: { 'Authorization': `bearer ${newToken}`, 'Content-Type': 'application/json'}},
 
   getBlogs: () => {
-    const request = axios.get(baseUrl);
+    const request = axios.get('/api/blogs');
     return request.then(response => response.data);
   },
 
@@ -28,10 +24,10 @@ const service = {
       url: blog.url
     });
 
-    return axios.put(`api/blogs/${blog._id}`, payload, authHeader);
+    return axios.put(`/api/blogs/${blog._id}`, payload, authHeader);
   },
 
-  deleteBlog: id => axios.delete(`api/blogs/${id}`, authHeader),
+  deleteBlog: id => axios.delete(`/api/blogs/${id}`, authHeader),
 
   login: (username, password) => axios.post('/api/login', ({ username, password })),
 };

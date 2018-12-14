@@ -3,18 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as blogActions from '../actions/blogActions';
 import Blog from './Blog';
+import { Link } from 'react-router-dom';
 
 const BlogContainer = ({ blogs, toggleBlog, likeBlog, deleteBlog, user }) => (
   <div>
     {blogs.map(blog =>
-      <Blog
-        key={blog._id}
-        blog={blog}
-        toggleBlog={toggleBlog}
-        likeBlog={likeBlog}
-        deleteBlog={deleteBlog}
-        username={user && user.username}
-      />
+      <div className="col-sm-12 border my-2" key={blog._id}>
+        <h5 className="mt-2"><Link to={`/blogs/${blog._id}`}>{blog.title}</Link></h5>
+        <p className="my-2">by <em>{blog.author}</em></p>
+      </div>
     )}
   </div>
 );

@@ -34,31 +34,33 @@ class SubmitBlogForm extends React.Component {
     if (!this.props.user) return null;
 
     return(
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <h4>create new</h4>
-          <div className="form-group row">
-            <label className="col-sm-2">title</label>
-            <div className="col-sm-10">
-              <input className="form-control-sm" name="title" type="text" value={this.state.title} onChange={this.handleFormChange} />
+      <div className="jumbotron py-3">
+        <div className="col-sm-12">
+          <form onSubmit={this.handleSubmit}>
+            <h4 className="mb-4">create a new blog</h4>
+            <div className="form-group row">
+              <label className="col-sm-2">title</label>
+              <div className="col-sm-10">
+                <input className="form-control-sm" name="title" type="text" value={this.state.title} onChange={this.handleFormChange} />
+              </div>
             </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-sm-2">author</label>
-            <div className="col-sm-10">
-              <input className="form-control-sm" name="author" type="text" value={this.state.author} onChange={this.handleFormChange} />
+            <div className="form-group row">
+              <label className="col-sm-2">author</label>
+              <div className="col-sm-10">
+                <input className="form-control-sm" name="author" type="text" value={this.state.author} onChange={this.handleFormChange} />
+              </div>
             </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-sm-2">url</label>
-            <div className="col-sm-10">
-              <input className="form-control-sm" name="url" type="text" value={this.state.url} onChange={this.handleFormChange} />
-            </div>  
-          </div>
-          <div className="col-sm-12">
-            <input className="btn btn-primary" type="submit" value="create" />
-          </div>
-        </form>
+            <div className="form-group row">
+              <label className="col-sm-2">url</label>
+              <div className="col-sm-10">
+                <input className="form-control-sm" name="url" type="text" value={this.state.url} onChange={this.handleFormChange} />
+              </div>  
+            </div>
+            <div className="col-sm-12">
+              <input className="btn btn-primary" type="submit" value="create" />
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

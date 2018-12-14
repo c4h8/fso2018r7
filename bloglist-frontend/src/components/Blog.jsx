@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const Blog = ({ blog, toggleBlog, likeBlog, deleteBlog, username }) => {
   const deleteButton = (!blog.user || blog.user.username === username)
@@ -18,6 +19,7 @@ const Blog = ({ blog, toggleBlog, likeBlog, deleteBlog, username }) => {
         <span className="blog-likes"> {`${blog.likes} likes `} </span>
         <button onClick={() => likeBlog(blog._id)}>like</button>
         {deleteButton}
+        <Link to={`/blogs/${blog._id}`}>goto blog</Link>
       </React.Fragment>)
     : null;
 
