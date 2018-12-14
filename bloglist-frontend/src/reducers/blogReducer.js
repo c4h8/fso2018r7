@@ -18,6 +18,11 @@ function reducer(state = [], action) {
       ? blog
       : { ...blog, expanded: !blog.expanded }
     );
+  case types.APPEND_BLOG_COMMENT:
+    return state.map(blog => blog._id !== action.id
+      ? blog
+      : { ...blog, comments: [...blog.comments, action.message] }  
+    );
   default:
     return state;
 

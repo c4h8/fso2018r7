@@ -94,7 +94,35 @@ export const postBlogLike = id => {
         dispatch(likeBlog(id));
         dispatch(postNotification({
           message: `liked blog ${targetBlog.title}`,
+          style: infoStyle
+        }));
+      })
+      .catch((e) => {
+        dispatch(postNotification({
+          message: parseError(e),
           style: errorStyle
+        }));
+      });
+  };
+};
+
+const appendBlogComment = (id, message) => ({
+  type: types.APPEND_BLOG_COMMENT,
+  id,
+  message
+});
+
+export const postBlogComment = (id, message) => {
+
+  return (dispatch, getState) => {
+    const targetBlog = getState().blogs.find(blog => blog._id === id);
+
+    targetBlog && service.commentBlog(id, message)
+      .then(() => {
+        dispatch(appendBlogComment(id, message));
+        dispatch(postNotification({
+          message: `commented blog ${targetBlog.title}`,
+          style: infoStyle
         }));
       })
       .catch((e) => {

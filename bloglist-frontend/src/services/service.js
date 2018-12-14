@@ -27,6 +27,8 @@ const service = {
     return axios.put(`/api/blogs/${blog._id}`, payload, authHeader);
   },
 
+  commentBlog: (id, message) => axios.post(`/api/blogs/${id}/comment`, {message: message}),
+
   deleteBlog: id => axios.delete(`/api/blogs/${id}`, authHeader),
 
   login: (username, password) => axios.post('/api/login', ({ username, password })),
