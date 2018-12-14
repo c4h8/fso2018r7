@@ -8,6 +8,7 @@ import SubmitBlogForm from './components/SubmitBlogForm';
 import NotificationContainer from './components/NotificationContainer';
 import { postNotification as postNotificationAction } from './actions/notificationActions';
 import { getBlogs as getBlogsAction } from './actions/blogActions';
+import { setLoggedInUser as setLoggedInUserAction } from './actions/userActions';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,13 +23,11 @@ class App extends React.Component {
   componentDidMount() {
     try {
       const user = JSON.parse(window.localStorage.getItem('loggedInUser'));
-      this.setState({user});
-      service.setAuthHeader(user.token);
+      this.props.setLoggedInUser(user);
     } catch(e) {
       window.alert(e);
     }
 
-    service.getBlogs().then(blogs => this.setState({ blogs }));
     this.props.getBlogs();
   }
 
@@ -42,11 +41,10 @@ class App extends React.Component {
       <div>
         <NotificationContainer />
         <LoginForm user={this.state.user} setUser={this.setUser} />
-        {this.state.user
-          ? <SubmitBlogForm />
-          : null
-        }
-        <BlogContainer user={this.state.user}/>
+
+        <SubmitBlogForm />
+
+        <BlogContainer />
       </div>
     );
   }
@@ -55,6 +53,7 @@ class App extends React.Component {
 App.propTypes = ({
   postNotification: PropTypes.func,
   getBlogs: PropTypes.func,
+  setLoggedInUser: PropTypes.func,
   rblogs: PropTypes.arrayOf(Object)
 });
 
@@ -64,6 +63,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   postNotification: (payload, lifetime, style) => dispatch(postNotificationAction(payload, lifetime, style)),
+  setLoggedInUser: (user) => {
+    dispatch(setLoggedInUserAction(user));
+    service.setAuthHeader(user ? user.token : undefined);
+  },
   getBlogs: () => dispatch(getBlogsAction())
 });
 

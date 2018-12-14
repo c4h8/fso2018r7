@@ -28,7 +28,8 @@ BlogContainer.propTypes = ({
 });
 
 const mapStateToProps = state => ({
-  blogs: state.blogs.sort((a, b) => b.likes- a.likes)
+  blogs: state.blogs.sort((a, b) => b.likes- a.likes),
+  user: state.users.loggedInUser
 });
 
 const mapDispatchToProps = dispatch => ({

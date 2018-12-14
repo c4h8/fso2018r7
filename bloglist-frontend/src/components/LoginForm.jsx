@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import service from '../services/service';
-import { parseError, errorStyle, infoStyle } from '../utils';
 import { postNotification as postNotificationAction } from '../actions/notificationActions';
+import * as userActions from '../actions/userActions';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -27,28 +26,11 @@ class LoginForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    service
-      .login(this.state.username, this.state.password)
-      .then(res => {
-        const user = res.data ;
-        
-        this.props.setUser(user);
-        window.localStorage.setItem('loggedInUser', JSON.stringify(user));
-
-        this.props.postNotification({
-          message: 'logged in',
-          style: infoStyle
-        });
-      })
-      .catch(e => this.props.postNotification({
-        message: parseError(e),
-        style: errorStyle
-      }));
+    this.props.loginUser(this.state.username, this.state.password);
   }
 
   handleLogout = () => {
-    window.localStorage.removeItem('loggedInUser');
-    this.props.setUser(undefined);
+    this.props.logoutUser();
 
     this.setState({
       username: '',
@@ -86,12 +68,19 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = ({
   user: PropTypes.instanceOf(Object),
-  setUser: PropTypes.func,
   postNotification: PropTypes.func,
+  loginUser: PropTypes.func,
+  logoutUser: PropTypes.func,
+});
+
+const mapStateToProps = state => ({
+  user: state.users.loggedInUser,
 });
 
 const mapDispatchToProps = dispatch => ({
   postNotification: (payload, lifetime, style) => dispatch(postNotificationAction(payload, lifetime, style)),
+  loginUser: (username, password) => dispatch(userActions.loginUser(username, password)),
+  logoutUser: () => dispatch(userActions.logoutUser())
 });
 
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

@@ -7,10 +7,12 @@ import thunk from 'redux-thunk';
 import App from './App';
 import notificationReducer from './reducers/notificationReducer';
 import blogReducer from './reducers/blogReducer';
+import userReducer from './reducers/userReducer';
 
 const reducer = combineReducers({
   notifications: notificationReducer,
   blogs: blogReducer,
+  users: userReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

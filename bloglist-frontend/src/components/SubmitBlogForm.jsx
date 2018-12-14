@@ -31,6 +31,8 @@ class SubmitBlogForm extends React.Component {
   }
 
   render() {
+    if (!this.props.user) return null;
+
     return(
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -60,6 +62,11 @@ SubmitBlogForm.propTypes = ({
   concatBlog: PropTypes.func,
   postNotification: PropTypes.func,
   postBlog: PropTypes.func,
+  user: PropTypes.instanceOf(Object)
+});
+
+const mapStateToProps = state => ({
+  user: state.users.loggedInUser,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -67,5 +74,5 @@ const mapDispatchToProps = dispatch => ({
   postBlog: blog => dispatch(postBlogAction(blog))
 });
 
-export default connect(null, mapDispatchToProps)(SubmitBlogForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SubmitBlogForm);
 
