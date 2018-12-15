@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import sinon from 'sinon';
 
 jest.mock('./services/service');
 
@@ -11,9 +10,6 @@ import notificationReducer from './reducers/notificationReducer';
 import blogReducer from './reducers/blogReducer';
 import userReducer from './reducers/userReducer';
 import App from './App';
-
-import * as blogActions from './actions/blogActions';
-import * as userActions from './actions/userActions';
 
 const userdata = ({
   name: 'test man',
