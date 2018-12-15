@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const BlogContainer = ({ blogs }) => (
   <div>
     {blogs.map(blog =>
-      <div className="col-sm-12 border my-2" key={blog._id}>
+      <div className="col-sm-12 border my-2 blog-listing" key={blog._id}>
         <h5 className="mt-2"><Link to={`/blogs/${blog._id}`}>{blog.title}</Link></h5>
         <p className="my-2">by <em>{blog.author}</em></p>
       </div>

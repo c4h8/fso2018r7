@@ -36,7 +36,14 @@ const blogs = [
   }
 ];
 
-const baseUrl = '/api/blogs';
+const users = [
+  {
+    username: 'root',
+    name: 'root',
+    id: '1',
+  }
+];
+
 
 let authHeader = undefined;
 
@@ -48,18 +55,12 @@ const service = ({
   submitBlog: blog => null,
 
   likeBlog: blog => {
-    // const payload = ({
-    //   user: blog.user._id,
-    //   likes: blog.likes + 1,
-    //   author: blog.author,
-    //   title: blog.title,
-    //   url: blog.url
-    // });
-
     return null;
   },
 
-  deleteBlog: id => null,
+  getUsers: jest.fn().mockImplementation(() => Promise.resolve(users)),
+
+  deleteBlog: jest.fn().mockImplementation(() => Promise.resolve('asd')),
 
   login: (username, password) => null,
 });
