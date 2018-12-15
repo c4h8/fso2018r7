@@ -78,10 +78,10 @@ blogsRouter.post('/:id/comment', async (request, response) => {
 
   try {
     await Blog.findByIdAndUpdate(request.params.id, { $push: { comments: request.body.message } });
-    response.status(204).end();
+    return response.status(201).end();
   } catch (e) {
     console.log(e);
-    response.send(400, { error: 'invalid id' });
+    return response.send(400, { error: 'invalid id' });
   }
 });
 

@@ -210,6 +210,26 @@ describe('api tests', () => {
       expect(blogsAfter).toContainEqual(updatedBlog);
     });
   });
+
+  describe('api/blogs/id/comments post', () => {
+    test('posting new blog to api/blogs/id wit PUT updates the existing blog', async () => {
+      const newComment = 'hello this is a new comment';
+
+      const blogsBefore = await Blog.find({});
+      const blog = blogsBefore[0];
+
+      expect(blog.comments).not.toContainEqual(newComment);
+
+      await api
+        .post(`/api/blogs/${blog._id}/comment`)
+        .send({ message: newComment })
+        .expect(201);
+
+      const blogAfter = await Blog.findById(blog._id);
+
+      expect(blogAfter.comments).toContainEqual(newComment);
+    });
+  });
 });
 
 
