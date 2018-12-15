@@ -14,7 +14,7 @@ const UserView = ({user, blogs}) => {
       <li className="list-group-item" key={blog._id}>
         {blog.title} by {blog.author}
       </li>)
-    : <li className="list-group-item">no blogs added</li>
+    : <li className="list-group-item">no blogs added</li>;
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
@@ -12,7 +12,7 @@ const mockState = {
   notifications: [
     {message: 'lol', id: 1}
   ]
-}
+};
 
 const reducer = combineReducers({
   notifications: notificationReducer,
@@ -33,7 +33,6 @@ describe('NotificationContainer', () => {
       </Provider>
     );
     
-    console.log(component.toJSON());
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
