@@ -44,6 +44,9 @@ class App extends React.Component {
       <Router>
         <div className="container">
           <nav className="nav bg-dark">
+            <li className="nav-item">
+              <span className="text-white">blog app</span>
+            </li>
             <li className="nav-item"><NavLink className="nav-link text-white" to="/">home</NavLink></li>
             <li className="nav-item"><NavLink className="nav-link text-white" to="/users">users</NavLink></li>
           </nav>

@@ -1,8 +1,6 @@
 import * as types from '../actionTypes';
 
 function reducer(state = [], action) {
-  console.log('REDUCER CALLED WITH TYPE: ', action.type);
-
   switch (action.type) {
   case types.SET_BLOGS:
     return action.payload;
