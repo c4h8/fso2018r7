@@ -9,17 +9,20 @@ const UserView = ({user, blogs}) => {
     </div>
   );
 
+  const payload = (blogs && blogs.length !== 0) 
+    ? blogs.map(blog =>
+      <li className="list-group-item" key={blog._id}>
+        {blog.title} by {blog.author}
+      </li>)
+    : <li className="list-group-item">no blogs added</li>;
+
   return (
     <div>
-      <h3>{user.username}</h3>
-      <h4>Added blogs: </h4>
-      <li>
-        {blogs.map(blog =>
-          <ul key={blog._id}>
-            {blog.title} by {blog.author}
-          </ul>
-        )}
-      </li>
+      <h3 className="mb-3">{user.username}</h3>
+      <h4 className="mb-3">Added blogs: </h4>
+      <ul className="list-group list-group-flush">
+        {payload}
+      </ul>
     </div>
   );
 };

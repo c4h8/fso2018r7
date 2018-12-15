@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationContainer renders blogs 1`] = `
+<div>
+  <div>
+    lol
+  </div>
+</div>
+`;

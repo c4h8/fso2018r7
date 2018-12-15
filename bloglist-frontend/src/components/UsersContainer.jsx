@@ -8,17 +8,16 @@ const UsersContainer = ({users}) => {
 
   return (
     <div>
-      <h3>Users</h3>
-      <table>
+      <table className="table">
         <thead>
           <tr>
-            <th></th>
+            <th>username</th>
             <th>blogs added</th>
           </tr>
         </thead>
         <tbody>
           {users.map(user =>
-            <tr key={user.id}>
+            <tr key={user.id} scope="row">
               <td><Link to={`/users/${user.id}`}>{user.username}</Link></td>
               <td>{user.blogs.length}</td>
             </tr>
