@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const tokenMiddleware = require('./tokenMiddleware');
+const path = require('path');
 
 const blogsRouter = require('./controllers/blogs');
 const usersRouter = require('./controllers/users');
@@ -30,6 +31,14 @@ app.use(tokenMiddleware);
 app.use('/api/blogs', blogsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'bloglist-frontend/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'bloglist-frontend/build', 'index.html'));
+  });
+}
 
 const server = http.createServer(app);
 
