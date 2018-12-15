@@ -18,7 +18,6 @@
     "start": "webpack-dev-server --mode=development",
     "test": "jest"
   },
-  "proxy": "http://localhost:3003",
   "jest": {
     "testMatch": [
       "**/?(*.)+(spec|test).js?(x)"
