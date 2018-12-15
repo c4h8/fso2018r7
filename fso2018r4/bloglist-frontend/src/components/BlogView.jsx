@@ -21,7 +21,7 @@ const BlogView = ({blog, likeBlog, deleteBlog, user, commentBlog}) => {
 
   return (
     <div>
-      <div className="mb-5">
+      <div className="jumbotron mb-5 py-4">
         <h3>{blog.title} by {blog.author}</h3>
         <p>{blog.url}</p>
         <p>added by {blog.user ? blog.user.username : 'anonymous'}</p>
